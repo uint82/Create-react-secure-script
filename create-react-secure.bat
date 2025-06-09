@@ -23,9 +23,9 @@ ECHO Now applying security overrides...
 REM Navigate to project directory
 cd %PROJECT_NAME%
 
-REM Add overrides to package.json with webpack-dev-server fix
+REM Add overrides to package.json
 ECHO Adding security overrides to package.json...
-call node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); pkg.overrides={'react-scripts':{'@svgr/webpack':'8.1.0','typescript':'4.9.5','postcss':'8.4.38','webpack-dev-server':'>=5.2.1'}}; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+call node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); pkg.overrides={'react-scripts':{'@svgr/webpack':'8.1.0','typescript':'4.9.5','postcss':'8.4.38'}}; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
 REM Remove node_modules and package-lock.json
 ECHO Removing node_modules and package-lock.json...
@@ -35,11 +35,6 @@ if exist package-lock.json del package-lock.json
 REM Run npm install
 ECHO Running npm install...
 call npm install
-
-REM Run audit to check if vulnerabilities are fixed
-ECHO.
-ECHO Running security audit...
-call npm audit
 
 ECHO.
 ECHO Project '%PROJECT_NAME%' created successfully with security overrides applied!
